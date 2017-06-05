@@ -1,0 +1,54 @@
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\cores\arduino
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\variants\standard
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\__cores__\arduino\Wire\src
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\PrayerTimes
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\DMD3
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\Sodaq_DS3231\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\__cores__\arduino\SPI\src
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\DMD
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\src
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\DMD
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\DMD3
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\DS3231
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\PrayerTimes
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\Sodaq_DS3231\src
+-IK:\2009\WORK\PROJECT\2017\06\JOKO P10\firmware\dmd-p10-arduino-esp8266\lib\TimerOne
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\__cores__\arduino\EEPROM\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\__cores__\arduino\SPI\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\__cores__\arduino\SPI1\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\__cores__\arduino\Servo\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\__cores__\arduino\SoftwareSerial\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\__cores__\arduino\Wire\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\__cores__\arduino\Wire1\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Adafruit_CircuitPlayground
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Adafruit_CircuitPlayground\utility
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Bridge\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Esplora\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Ethernet\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Firmata
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Firmata\utility
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\GSM\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\HID\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Keyboard\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\LiquidCrystal\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Mouse\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Robot_Control\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Robot_Motor\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\SD\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Scheduler\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\SpacebrewYun\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Stepper\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\TFT\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\Temboo\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\USBHost\src
+-IC:\Users\EX4\.platformio\packages\framework-arduinoavr\libraries\WiFi\src
+-IC:\Users\EX4\.platformio\packages\toolchain-atmelavr\avr\include
+-IC:\Users\EX4\.platformio\packages\toolchain-atmelavr\lib\gcc\avr\4.9.2\include
+-IC:\Users\EX4\.platformio\packages\toolchain-atmelavr\lib\gcc\avr\4.9.2\include-fixed
+-IC:\Users\EX4\.platformio\packages\tool-unity
+-DF_CPU=16000000L
+-DPLATFORMIO=30400
+-DARDUINO_ARCH_AVR
+-DARDUINO_AVR_UNO
+-DARDUINO=10618
+-D__AVR_ATmega328P__
