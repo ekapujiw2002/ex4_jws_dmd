@@ -75,7 +75,7 @@ const char *msg_atas[] = {"Selamat datang di Masjid xxx Desa xxx",
                           "Haram bicara saat khotib menyampaikan khotbah"};
 
 // delay scanrate in ms
-uint8_t display_delay_rate[2] = {20};
+uint8_t display_delay_rate[2] = {70};
 
 // last refresh time
 uint32_t display_last_refresh[2] = {0};
@@ -157,6 +157,106 @@ void prayer_time_update(const DateTime rtc_in,
 }
 
 /**
+ * check what prayer time is it now
+ * @method prayer_time_check_event
+ * @param  pryr_times_input        [description]
+ * @return                         [description]
+ */
+uint8_t prayer_time_check_event(DateTime current_time,
+                                double *pryr_times_input) {
+  uint8_t retx = 255;
+  bool is_event_detected = false;
+  int hhx, mmx;
+
+  // 0=imsak
+  // 7=Isya
+  for (size_t i = 0; i < 8; i++) {
+    if (i == 0) {
+      // check waktu imsak
+      // kode hasil = 0
+      get_float_time_parts(pryr_times_input[i] - (10.0f / 60.0f), hhx, mmx);
+    } else {
+      get_float_time_parts(pryr_times_input[i - 1], hhx, mmx);
+    }
+
+    is_event_detected =
+        ((hhx == current_time.hour()) && (current_time.minute() - mmx < 5));
+    if (is_event_detected) {
+      retx = i;
+      break;
+    }
+  }
+
+  return retx;
+}
+
+/**
+ * update text ke display
+ * @method display_update_text_process
+ */
+void display_update_text_process() {
+  // top text
+  if (display_current_step[0] == 0) {
+    display_text[0] = String(msg_atas[t_last_updated % 4]) + String(" ");
+  }
+
+  // bottom text
+  if (display_current_step[1] == 0) {
+    DateTime tnx = rtc.now();
+    char tmx[16];
+
+    // current date
+    snprintf_P(tmx, sizeof(tmx), "%02u-%02u-%04u", tnx.date(), tnx.month(),
+               tnx.year());
+    display_text[1] = String(day_locale[tnx.dayOfWeek() - 1]) + String(",") +
+                      String(tmx) + String(" ");
+
+    // prayer time update
+    prayer_time_update(tnx, jws_loc_set, prayer_times);
+
+    // build up text
+    int hhx, mmx;
+    // waktu 1/3 malam
+    // terbit-((terbit-tenggelam)/3)
+
+    // imsak = subuh - 10menit
+    get_float_time_parts(prayer_times[0] - (10.0f / 60.0f), hhx, mmx);
+    snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
+    display_text[1] += String("Imsak ") + String(tmx) + String(" ");
+
+    // Subuh
+    get_float_time_parts(prayer_times[0], hhx, mmx);
+    snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
+    display_text[1] += String("Subuh ") + String(tmx) + String(" ");
+
+    // terbit
+    get_float_time_parts(prayer_times[1], hhx, mmx);
+    snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
+    display_text[1] += String("Terbit ") + String(tmx) + String(" ");
+
+    // dzuhur
+    get_float_time_parts(prayer_times[2], hhx, mmx);
+    snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
+    display_text[1] += String("Dzuhur ") + String(tmx) + String(" ");
+
+    // Ashar
+    get_float_time_parts(prayer_times[3], hhx, mmx);
+    snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
+    display_text[1] += String("Ashar ") + String(tmx) + String(" ");
+
+    // Maghrib
+    get_float_time_parts(prayer_times[5], hhx, mmx);
+    snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
+    display_text[1] += String("Maghrib ") + String(tmx) + String(" ");
+
+    // Isya
+    get_float_time_parts(prayer_times[6], hhx, mmx);
+    snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
+    display_text[1] += String("Isya ") + String(tmx) + String(" ");
+  }
+}
+
+/**
  * app setup
  * @method setup
  */
@@ -194,73 +294,14 @@ void loop() {
   // calculate time and text update
   if (t_now - t_last_updated > 1000) {
     t_last_updated = t_now;
-
-    // top text
-    if (display_current_step[0] == 0) {
-      display_text[0] = String(msg_atas[t_last_updated % 4]);
-    }
-
-    // bottom text
-    if (display_current_step[1] == 0) {
-      DateTime tnx = rtc.now();
-      char tmx[16];
-
-      // current date
-      snprintf_P(tmx, sizeof(tmx), "%02u-%02u-%04u", tnx.date(), tnx.month(),
-                 tnx.year());
-      display_text[1] = String(day_locale[tnx.dayOfWeek() - 1]) + String(",") +
-                        String(tmx) + String(" ");
-
-      // prayer time update
-      prayer_time_update(tnx, jws_loc_set, prayer_times);
-
-      // build up text
-      int hhx, mmx;
-      // waktu 1/3 malam
-      // terbit-((terbit-tenggelam)/3)
-
-      // imsak = subuh - 10menit
-      get_float_time_parts(prayer_times[0] - (10.0f / 60.0f), hhx, mmx);
-      snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
-      display_text[1] += String("Imsak ") + String(tmx) + String(" ");
-
-      // Subuh
-      get_float_time_parts(prayer_times[0], hhx, mmx);
-      snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
-      display_text[1] += String("Subuh ") + String(tmx) + String(" ");
-
-      // terbit
-      get_float_time_parts(prayer_times[1], hhx, mmx);
-      snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
-      display_text[1] += String("Terbit ") + String(tmx) + String(" ");
-
-      // dzuhur
-      get_float_time_parts(prayer_times[2], hhx, mmx);
-      snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
-      display_text[1] += String("Dzuhur ") + String(tmx) + String(" ");
-
-      // Ashar
-      get_float_time_parts(prayer_times[3], hhx, mmx);
-      snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
-      display_text[1] += String("Ashar ") + String(tmx) + String(" ");
-
-      // Maghrib
-      get_float_time_parts(prayer_times[5], hhx, mmx);
-      snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
-      display_text[1] += String("Maghrib ") + String(tmx) + String(" ");
-
-      // Isya
-      get_float_time_parts(prayer_times[6], hhx, mmx);
-      snprintf_P(tmx, sizeof(tmx), "%02d:%02d", hhx, mmx);
-      display_text[1] += String("Isya ") + String(tmx) + String(" ");
-    }
+    display_update_text_process();
   }
 
   // update the step
   for (uint8_t i = 0; i < 2; i++) {
     if (t_now >= display_last_refresh[i]) {
       if (display_current_step[i] == 0) {
-        // display_text[i] = String(msg_atas[i]);
+        display_update_text_process();
         display_total_step[i] =
             display.textWidth(display_text[i]) + display.width();
       }
@@ -276,6 +317,7 @@ void loop() {
   if (display_must_swapped) {
     display_must_swapped = false;
 
+    display.clear();
     display.setFont(System5x7);
     display.drawText(display.width() - display_current_step[0], 0,
                      display_text[0]);
